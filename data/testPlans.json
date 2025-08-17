@@ -20,5 +20,27 @@
     ],
     "createdAt": "2025-08-17T22:05:35.309Z",
     "updatedAt": "2025-08-17T22:05:35.309Z"
+  },
+  {
+    "id": "meg8wo4xej6ycu22qji",
+    "planName": "Authentication Module Testing",
+    "testType": "Regression Testing",
+    "objective": "Ensure all authentication features work correctly after recent updates",
+    "scope": "Login, logout, password reset, and user registration functionality",
+    "status": "Approved",
+    "createdBy": "meg8wo4v4fwwuvt5m7",
+    "approvedBy": "meg8wo4v4fwwuvt5m7",
+    "startDate": "2025-08-17T22:16:22.833Z",
+    "endDate": "2025-08-24T22:16:22.833Z",
+    "estimatedDuration": 5,
+    "environment": "Test Environment",
+    "version": 1,
+    "tags": [
+      "authentication",
+      "regression",
+      "critical"
+    ],
+    "createdAt": "2025-08-17T22:16:22.833Z",
+    "updatedAt": "2025-08-17T22:16:22.833Z"
   }
 ]

@@ -20,5 +20,27 @@
     "completionPercentage": 0,
     "createdAt": "2025-08-17T22:05:35.309Z",
     "updatedAt": "2025-08-17T22:05:35.309Z"
+  },
+  {
+    "id": "meg8wo4y7rucacrxqz6",
+    "cycleName": "Auth Regression Cycle 1",
+    "testPlanId": "meg8wo4xej6ycu22qji",
+    "status": "Open",
+    "startDate": "2025-08-17T22:16:22.833Z",
+    "plannedStartDate": "2025-08-17T22:16:22.833Z",
+    "plannedEndDate": "2025-08-20T22:16:22.833Z",
+    "createdBy": "meg8wo4v4fwwuvt5m7",
+    "assignedTesters": [
+      "meg8wo4wxlc0jzv06y"
+    ],
+    "environment": "Test Environment",
+    "objectives": "Complete regression testing of authentication module",
+    "successCriteria": "All critical authentication features pass testing",
+    "riskLevel": "Medium",
+    "priority": "High",
+    "estimatedEffort": 16,
+    "completionPercentage": 0,
+    "createdAt": "2025-08-17T22:16:22.834Z",
+    "updatedAt": "2025-08-17T22:16:22.834Z"
   }
 ]
