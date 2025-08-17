@@ -136,19 +136,19 @@ const TestExecution = sequelize.define('TestExecution', {
   tableName: 'test_executions',
   indexes: [
     {
-      fields: ['testCycleId']
+      fields: ['test_cycle_id']
     },
     {
-      fields: ['testScenarioId']
+      fields: ['test_scenario_id']
     },
     {
-      fields: ['assignedTester']
+      fields: ['assigned_tester']
     },
     {
       fields: ['status']
     },
     {
-      fields: ['executionDate']
+      fields: ['execution_date']
     }
   ]
 });

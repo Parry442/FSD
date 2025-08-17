@@ -222,7 +222,7 @@ const Defect = sequelize.define('Defect', {
   tableName: 'defects',
   indexes: [
     {
-      fields: ['defectId']
+      fields: ['defect_id']
     },
     {
       fields: ['status']
@@ -237,13 +237,13 @@ const Defect = sequelize.define('Defect', {
       fields: ['category']
     },
     {
-      fields: ['reportedBy']
+      fields: ['reported_by']
     },
     {
-      fields: ['assignedTo']
+      fields: ['assigned_to']
     },
     {
-      fields: ['reportedDate']
+      fields: ['reported_date']
     }
   ]
 });

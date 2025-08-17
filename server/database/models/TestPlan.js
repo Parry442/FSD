@@ -133,19 +133,19 @@ const TestPlan = sequelize.define('TestPlan', {
   tableName: 'test_plans',
   indexes: [
     {
-      fields: ['planName']
+      fields: ['plan_name']
     },
     {
-      fields: ['testType']
+      fields: ['test_type']
     },
     {
       fields: ['status']
     },
     {
-      fields: ['createdBy']
+      fields: ['created_by']
     },
     {
-      fields: ['isTemplate']
+      fields: ['is_template']
     }
   ]
 });

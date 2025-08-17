@@ -112,19 +112,19 @@ const TestCycle = sequelize.define('TestCycle', {
   tableName: 'test_cycles',
   indexes: [
     {
-      fields: ['cycleName']
+      fields: ['cycle_name']
     },
     {
-      fields: ['testPlanId']
+      fields: ['test_plan_id']
     },
     {
       fields: ['status']
     },
     {
-      fields: ['createdBy']
+      fields: ['created_by']
     },
     {
-      fields: ['plannedStartDate']
+      fields: ['planned_start_date']
     }
   ]
 });
