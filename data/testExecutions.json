@@ -1,0 +1,16 @@
+[
+  {
+    "id": "meg8isi6gzxvcky74s",
+    "testCycleId": "meg8isi58v0df2yd66e",
+    "testScenarioId": "meg8isi5qmtwbvwfdr",
+    "assignedTester": "meg8isi5tvztab5yhgq",
+    "status": "Not Started",
+    "executionDate": null,
+    "environment": "Test Environment",
+    "browser": "Chrome",
+    "isAutomated": false,
+    "priority": "High",
+    "createdAt": "2025-08-17T22:05:35.310Z",
+    "updatedAt": "2025-08-17T22:05:35.310Z"
+  }
+]

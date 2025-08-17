@@ -1,0 +1,29 @@
+[
+  {
+    "id": "meg8isi6uegkbthslv",
+    "defectId": "DEF001",
+    "title": "Login fails with special characters in username",
+    "description": "Users cannot log in when username contains special characters like @, #, or $",
+    "severity": "High",
+    "priority": "High",
+    "status": "Open",
+    "category": "Functional",
+    "reportedBy": "meg8isi5tvztab5yhgq",
+    "assignedTo": "meg8isi4k41qwh94gr",
+    "assignedGroup": "Functional SME",
+    "testExecutionId": "meg8isi6gzxvcky74s",
+    "testScenarioId": "meg8isi5qmtwbvwfdr",
+    "testCycleId": "meg8isi58v0df2yd66e",
+    "moduleFeature": "Authentication",
+    "environment": "Test Environment",
+    "browser": "Chrome",
+    "stepsToReproduce": "1. Create user with username containing @ symbol\n2. Try to log in\n3. Login fails with error",
+    "expectedBehavior": "User should be able to log in successfully",
+    "actualBehavior": "Login fails with validation error",
+    "reportedDate": "2025-08-17T22:05:35.310Z",
+    "estimatedEffort": 4,
+    "retestRequired": true,
+    "createdAt": "2025-08-17T22:05:35.310Z",
+    "updatedAt": "2025-08-17T22:05:35.310Z"
+  }
+]
