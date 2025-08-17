@@ -31,34 +31,59 @@ const User = sequelize.define('User', {
       len: [6, 255]
     }
   },
-  firstName: {
-    type: DataTypes.STRING(50),
-    allowNull: false
-  },
-  lastName: {
-    type: DataTypes.STRING(50),
-    allowNull: false
+  name: {
+    type: DataTypes.STRING(100),
+    allowNull: false,
+    comment: 'Full name of the user'
   },
   role: {
-    type: DataTypes.ENUM('Test Manager', 'Tester', 'Troubleshooter', 'Viewer'),
+    type: DataTypes.STRING(50),
     allowNull: false,
-    defaultValue: 'Viewer'
+    defaultValue: 'Viewer',
+    comment: 'Role of the user in the system'
   },
   department: {
     type: DataTypes.STRING(100),
-    allowNull: true
+    allowNull: true,
+    comment: 'Department the user belongs to'
   },
-  isActive: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: true
+  phone: {
+    type: DataTypes.STRING(20),
+    allowNull: true,
+    comment: 'Phone number of the user'
+  },
+  avatar: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+    comment: 'URL to user avatar image'
+  },
+  status: {
+    type: DataTypes.STRING(20),
+    allowNull: false,
+    defaultValue: 'Active',
+    comment: 'Current status of the user account'
   },
   lastLogin: {
     type: DataTypes.DATE,
-    allowNull: true
+    allowNull: true,
+    comment: 'Last login timestamp'
   },
-  profileImage: {
-    type: DataTypes.STRING(255),
-    allowNull: true
+  permissions: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+    defaultValue: '[]',
+    comment: 'User permissions (stored as JSON string)',
+    get() {
+      const rawValue = this.getDataValue('permissions');
+      try {
+        return rawValue ? JSON.parse(rawValue) : [];
+      } catch {
+        return [];
+      }
+    },
+    set(value) {
+      this.setDataValue('permissions', JSON.stringify(value || []));
+    }
   }
 }, {
   tableName: 'users',
@@ -82,16 +107,16 @@ User.prototype.validatePassword = async function(password) {
 };
 
 User.prototype.getFullName = function() {
-  return `${this.firstName} ${this.lastName}`;
+  return this.name;
 };
 
 // Class methods
 User.findByRole = function(role) {
-  return this.findAll({ where: { role, isActive: true } });
+  return this.findAll({ where: { role, status: 'Active' } });
 };
 
 User.findByDepartment = function(department) {
-  return this.findAll({ where: { department, isActive: true } });
+  return this.findAll({ where: { department, status: 'Active' } });
 };
 
 module.exports = User;

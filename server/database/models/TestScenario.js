@@ -29,19 +29,22 @@ const TestScenario = sequelize.define('TestScenario', {
     comment: 'Business process associated with the scenario'
   },
   scenarioType: {
-    type: DataTypes.ENUM('Functional', 'Non-Functional', 'Integration', 'Regression', 'UAT', 'SIT', 'Performance', 'Security'),
+    type: DataTypes.STRING(50),
     allowNull: false,
-    defaultValue: 'Functional'
+    defaultValue: 'Functional',
+    comment: 'Type of test scenario'
   },
   priority: {
-    type: DataTypes.ENUM('High', 'Medium', 'Low', 'Critical'),
+    type: DataTypes.STRING(20),
     allowNull: false,
-    defaultValue: 'Medium'
+    defaultValue: 'Medium',
+    comment: 'Priority level of the scenario'
   },
   frequencyOfUse: {
-    type: DataTypes.ENUM('Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly', 'On-Demand'),
+    type: DataTypes.STRING(20),
     allowNull: false,
-    defaultValue: 'On-Demand'
+    defaultValue: 'On-Demand',
+    comment: 'How frequently this scenario is used'
   },
   owner: {
     type: DataTypes.UUID,
@@ -105,9 +108,10 @@ const TestScenario = sequelize.define('TestScenario', {
     comment: 'Dependencies for the test scenario'
   },
   scenarioStatus: {
-    type: DataTypes.ENUM('Active', 'End-Dated', 'Draft', 'Under Review'),
+    type: DataTypes.STRING(20),
     allowNull: false,
-    defaultValue: 'Active'
+    defaultValue: 'Active',
+    comment: 'Current status of the scenario'
   },
   endDate: {
     type: DataTypes.DATE,
@@ -117,7 +121,8 @@ const TestScenario = sequelize.define('TestScenario', {
   lastUpdated: {
     type: DataTypes.DATE,
     allowNull: false,
-    defaultValue: DataTypes.NOW
+    defaultValue: DataTypes.NOW,
+    comment: 'Last update timestamp'
   },
   reviewedBy: {
     type: DataTypes.UUID,
@@ -126,7 +131,8 @@ const TestScenario = sequelize.define('TestScenario', {
   },
   reviewDate: {
     type: DataTypes.DATE,
-    allowNull: true
+    allowNull: true,
+    comment: 'Date when scenario was reviewed'
   },
   version: {
     type: DataTypes.INTEGER,
@@ -134,9 +140,21 @@ const TestScenario = sequelize.define('TestScenario', {
     comment: 'Version number of the scenario'
   },
   tags: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
-    defaultValue: [],
-    comment: 'Tags for categorization and filtering'
+    type: DataTypes.TEXT,
+    allowNull: true,
+    defaultValue: '[]',
+    comment: 'Tags for categorization and filtering (stored as JSON string)',
+    get() {
+      const rawValue = this.getDataValue('tags');
+      try {
+        return rawValue ? JSON.parse(rawValue) : [];
+      } catch {
+        return [];
+      }
+    },
+    set(value) {
+      this.setDataValue('tags', JSON.stringify(value || []));
+    }
   },
   estimatedDuration: {
     type: DataTypes.INTEGER,
@@ -144,32 +162,13 @@ const TestScenario = sequelize.define('TestScenario', {
     comment: 'Estimated duration in minutes'
   },
   riskLevel: {
-    type: DataTypes.ENUM('Low', 'Medium', 'High', 'Critical'),
+    type: DataTypes.STRING(20),
     allowNull: true,
-    defaultValue: 'Medium'
+    defaultValue: 'Medium',
+    comment: 'Risk level of the scenario'
   }
 }, {
-  tableName: 'test_scenarios',
-  indexes: [
-    {
-      fields: ['scenario_id']
-    },
-    {
-      fields: ['module_feature']
-    },
-    {
-      fields: ['scenario_type']
-    },
-    {
-      fields: ['priority']
-    },
-    {
-      fields: ['scenario_status']
-    },
-    {
-      fields: ['owner']
-    }
-  ]
+  tableName: 'test_scenarios'
 });
 
 // Instance methods
