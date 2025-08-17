@@ -152,19 +152,19 @@ const TestScenario = sequelize.define('TestScenario', {
   tableName: 'test_scenarios',
   indexes: [
     {
-      fields: ['scenarioId']
+      fields: ['scenario_id']
     },
     {
-      fields: ['moduleFeature']
+      fields: ['module_feature']
     },
     {
-      fields: ['scenarioType']
+      fields: ['scenario_type']
     },
     {
       fields: ['priority']
     },
     {
-      fields: ['scenarioStatus']
+      fields: ['scenario_status']
     },
     {
       fields: ['owner']
