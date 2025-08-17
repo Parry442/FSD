@@ -1,0 +1,15 @@
+[
+  {
+    "id": "meg8isi5tvztab5yhgq",
+    "username": "tester",
+    "email": "tester@testingsuite.com",
+    "password": "$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj4J/vHhH8eG",
+    "firstName": "Test",
+    "lastName": "User",
+    "role": "Tester",
+    "department": "QA",
+    "isActive": true,
+    "createdAt": "2025-08-17T22:05:35.309Z",
+    "updatedAt": "2025-08-17T22:05:35.309Z"
+  }
+]
