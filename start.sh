@@ -37,16 +37,6 @@ if [ ! -d "client/node_modules" ]; then
     cd client && npm install && cd ..
 fi
 
-# Create data directory if it doesn't exist
-mkdir -p data
-
-# Check if database exists, if not run migration
-if [ ! -f "data/testing-suite.sqlite" ]; then
-    echo "🗄️  Setting up database..."
-    npm run migrate
-    npm run seed
-fi
-
 echo "🎯 Starting the application..."
 echo "📱 Frontend will be available at: http://localhost:3000"
 echo "🔧 Backend API will be available at: http://localhost:5000"

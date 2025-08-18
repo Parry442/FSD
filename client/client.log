@@ -1,0 +1,16 @@
+
+> testing-suite-client@1.0.0 start
+> react-scripts start
+
+(node:27844) [DEP_WEBPACK_DEV_SERVER_ON_AFTER_SETUP_MIDDLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:27844) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+Starting the development server...
+
+Failed to compile.
+
+Module not found: Error: Can't resolve './App' in '/workspace/client/src'
+ERROR in ./src/index.tsx 6:0-24
+Module not found: Error: Can't resolve './App' in '/workspace/client/src'
+
+webpack compiled with 1 error
