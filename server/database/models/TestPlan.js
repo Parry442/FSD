@@ -7,23 +7,15 @@ const TestPlan = sequelize.define('TestPlan', {
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true
   },
-  planName: {
+  name: {
     type: DataTypes.STRING(200),
     allowNull: false,
     comment: 'Name of the test plan'
   },
-  testType: {
-    type: DataTypes.ENUM(
-      'Schedule Releases',
-      'Regression Testing',
-      'UAT',
-      'SIT',
-      'CPU Testing',
-      'Desktop/Browser Compatibility Testing',
-      'Patch Testing',
-      'Security Testing'
-    ),
-    allowNull: false
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+    comment: 'Description of the test plan'
   },
   objective: {
     type: DataTypes.TEXT,
@@ -35,153 +27,112 @@ const TestPlan = sequelize.define('TestPlan', {
     allowNull: false,
     comment: 'Scope of the test plan'
   },
-  status: {
-    type: DataTypes.ENUM('Draft', 'Under Review', 'Approved', 'In Progress', 'Completed', 'Cancelled'),
+  testType: {
+    type: DataTypes.STRING(50),
     allowNull: false,
-    defaultValue: 'Draft'
+    defaultValue: 'Functional',
+    comment: 'Type of testing'
+  },
+  status: {
+    type: DataTypes.STRING(20),
+    allowNull: false,
+    defaultValue: 'Draft',
+    comment: 'Status of the test plan'
   },
   createdBy: {
     type: DataTypes.UUID,
     allowNull: false,
-    comment: 'User ID who created the test plan'
+    comment: 'User ID who created the plan'
   },
   approvedBy: {
     type: DataTypes.UUID,
     allowNull: true,
-    comment: 'User ID who approved the test plan'
+    comment: 'User ID who approved the plan'
   },
-  approvalDate: {
+  approvedAt: {
     type: DataTypes.DATE,
-    allowNull: true
+    allowNull: true,
+    comment: 'Date when plan was approved'
   },
   startDate: {
     type: DataTypes.DATE,
     allowNull: true,
-    comment: 'Planned start date'
+    comment: 'Start date of testing'
   },
   endDate: {
     type: DataTypes.DATE,
     allowNull: true,
-    comment: 'Planned end date'
+    comment: 'End date of testing'
   },
   estimatedDuration: {
     type: DataTypes.INTEGER,
     allowNull: true,
-    comment: 'Estimated duration in days'
+    comment: 'Estimated duration in hours'
   },
-  environment: {
-    type: DataTypes.STRING(100),
+  riskLevel: {
+    type: DataTypes.STRING(20),
     allowNull: true,
-    comment: 'Required test environment'
+    defaultValue: 'Medium',
+    comment: 'Risk level of the test plan'
+  },
+  environments: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+    defaultValue: '[]',
+    comment: 'Environments for testing (stored as JSON string)',
+    get() {
+      const rawValue = this.getDataValue('environments');
+      try {
+        return rawValue ? JSON.parse(rawValue) : [];
+      } catch {
+        return [];
+      }
+    },
+    set(value) {
+      this.setDataValue('environments', JSON.stringify(value || []));
+    }
   },
   dataDependencies: {
     type: DataTypes.TEXT,
     allowNull: true,
-    comment: 'Data dependencies for the test plan'
+    defaultValue: '[]',
+    comment: 'Data dependencies (stored as JSON string)',
+    get() {
+      const rawValue = this.getDataValue('dataDependencies');
+      try {
+        return rawValue ? JSON.parse(rawValue) : [];
+      } catch {
+        return [];
+      }
+    },
+    set(value) {
+      this.setDataValue('dataDependencies', JSON.stringify(value || []));
+    }
   },
-  riskAssessment: {
+  tags: {
     type: DataTypes.TEXT,
     allowNull: true,
-    comment: 'Risk assessment for the test plan'
-  },
-  assumptions: {
-    type: DataTypes.TEXT,
-    allowNull: true,
-    comment: 'Assumptions for the test plan'
-  },
-  constraints: {
-    type: DataTypes.TEXT,
-    allowNull: true,
-    comment: 'Constraints for the test plan'
-  },
-  successCriteria: {
-    type: DataTypes.TEXT,
-    allowNull: true,
-    comment: 'Success criteria for the test plan'
+    defaultValue: '[]',
+    comment: 'Tags for categorization (stored as JSON string)',
+    get() {
+      const rawValue = this.getDataValue('tags');
+      try {
+        return rawValue ? JSON.parse(rawValue) : [];
+      } catch {
+        return [];
+      }
+    },
+    set(value) {
+      this.setDataValue('tags', JSON.stringify(value || []));
+    }
   },
   version: {
     type: DataTypes.INTEGER,
     defaultValue: 1,
-    comment: 'Version number of the test plan'
-  },
-  tags: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
-    defaultValue: [],
-    comment: 'Tags for categorization'
-  },
-  isTemplate: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-    comment: 'Whether this is a reusable template'
-  },
-  templateName: {
-    type: DataTypes.STRING(100),
-    allowNull: true,
-    comment: 'Name if this is a template'
-  },
-  aiGenerated: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-    comment: 'Whether this plan was AI-generated'
-  },
-  aiRecommendations: {
-    type: DataTypes.TEXT,
-    allowNull: true,
-    comment: 'AI recommendations for the test plan'
+    comment: 'Version number of the plan'
   }
 }, {
-  tableName: 'test_plans',
-  indexes: [
-    {
-      fields: ['plan_name']
-    },
-    {
-      fields: ['test_type']
-    },
-    {
-      fields: ['status']
-    },
-    {
-      fields: ['created_by']
-    },
-    {
-      fields: ['is_template']
-    }
-  ]
+  tableName: 'test_plans'
 });
-
-// Instance methods
-TestPlan.prototype.isActive = function() {
-  return ['Under Review', 'Approved', 'In Progress'].includes(this.status);
-};
-
-TestPlan.prototype.canBeModified = function() {
-  return ['Draft', 'Under Review'].includes(this.status);
-};
-
-TestPlan.prototype.requiresApproval = function() {
-  return this.status === 'Under Review';
-};
-
-// Class methods
-TestPlan.findByType = function(testType) {
-  return this.findAll({ where: { testType, status: { [sequelize.Op.ne]: 'Cancelled' } } });
-};
-
-TestPlan.findActive = function() {
-  return this.findAll({
-    where: {
-      status: { [sequelize.Op.in]: ['Under Review', 'Approved', 'In Progress'] }
-    }
-  });
-};
-
-TestPlan.findTemplates = function() {
-  return this.findAll({ where: { isTemplate: true } });
-};
-
-TestPlan.findByCreator = function(userId) {
-  return this.findAll({ where: { createdBy: userId } });
-};
 
 module.exports = TestPlan;

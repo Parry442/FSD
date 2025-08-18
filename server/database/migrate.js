@@ -1,24 +1,35 @@
-const { initializeDatabase } = require('./index');
+const { sequelize, testConnection } = require('./config');
+const { 
+  User, 
+  TestScenario, 
+  TestPlan, 
+  TestCycle, 
+  TestExecution, 
+  Defect 
+} = require('./index');
 
-async function runMigrations() {
+const migrate = async () => {
   try {
     console.log('🔄 Starting database migration...');
     
-    await initializeDatabase();
+    // Test connection
+    await testConnection();
     
-    console.log('✅ Database migration completed successfully!');
-    console.log('🚀 Application is ready to run.');
+    // Sync all models (create tables)
+    await sequelize.sync({ force: true });
+    console.log('✅ Database tables created successfully');
     
+    console.log('🎉 Migration completed successfully!');
     process.exit(0);
   } catch (error) {
-    console.error('❌ Database migration failed:', error);
+    console.error('❌ Migration failed:', error);
     process.exit(1);
   }
-}
+};
 
-// Run migrations if this file is executed directly
+// Run migration if called directly
 if (require.main === module) {
-  runMigrations();
+  migrate();
 }
 
-module.exports = { runMigrations };
+module.exports = { migrate };
